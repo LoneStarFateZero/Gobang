@@ -36,10 +36,11 @@ public class GobangLauncher {
 	private int selectedY = -1;
 
 	public void init() throws Exception {
-		table = ImageIO.read(new File("image/board.png"));
-		black = ImageIO.read(new File("image/black.png"));
-		white = ImageIO.read(new File("image/white.png"));
-		selected = ImageIO.read(new File("image/selected.png"));
+
+		table = ImageIO.read(getClass().getResource("/resource/image/board.png"));
+		black = ImageIO.read(getClass().getResource("/resource/image/black.png"));
+		white = ImageIO.read(getClass().getResource("/resource/image/white.png"));
+		selected = ImageIO.read(getClass().getResource("/resource/image/selected.png"));
 
 		for (int i = 0; i < BOARD_SIZE; i++) {
 			for (int j = 0; j < BOARD_SIZE; j++) {
@@ -82,6 +83,13 @@ public class GobangLauncher {
 				selectedX = (e.getX() - X_OFFSET) / RATE;
 				selectedY = (e.getY() - Y_OFFSET) / RATE;
 				chessBoard.repaint();
+			}
+		});
+
+		f.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
 			}
 		});
 
