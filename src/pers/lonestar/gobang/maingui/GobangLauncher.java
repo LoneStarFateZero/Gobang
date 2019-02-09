@@ -15,6 +15,8 @@ public class GobangLauncher {
 	BufferedImage white;
 	BufferedImage selected;
 
+	//定义先后手
+	private boolean order = true;
 	//定义棋盘的大小
 	private static int BOARD_SIZE = 15;
 	//定义棋盘宽高的像素
@@ -26,7 +28,7 @@ public class GobangLauncher {
 	private final int X_OFFSET = 0;
 	private final int Y_OFFSET = 0;
 	//定义一个二维数组来充当棋盘
-	private String[][] board = new String[BOARD_SIZE][BOARD_SIZE];
+	private byte[][] board = new byte[BOARD_SIZE][BOARD_SIZE];
 	//五子棋游戏的窗口
 	JFrame f = new JFrame("五子棋游戏");
 	//五子棋游戏棋盘对应的Canvas组件
@@ -43,7 +45,7 @@ public class GobangLauncher {
 
 		for (int i = 0; i < BOARD_SIZE; i++) {
 			for (int j = 0; j < BOARD_SIZE; j++) {
-				board[i][j] = "＋";
+				board[i][j] = 0;
 			}
 		}
 
@@ -59,9 +61,16 @@ public class GobangLauncher {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//将用户鼠标点击事件转换成棋子数组的坐标
-				int xPos = (int) ((e.getX() - X_OFFSET) / RATE);
-				int yPos = (int) ((e.getY() - Y_OFFSET) / RATE);
-				board[xPos][yPos] = "⚫";
+				int xPos = (e.getX() - X_OFFSET) / RATE;
+				int yPos = (e.getY() - Y_OFFSET) / RATE;
+				//轮到黑棋
+				if (order && board[xPos][yPos] == 0) {
+					board[xPos][yPos] = 1;
+					order = false;
+				} else if (!order && board[xPos][yPos] == 0) {
+					board[xPos][yPos] = -1;
+					order = true;
+				}
 				/**
 				 * 电脑随机生成两个随机数
 				 */
@@ -96,11 +105,11 @@ public class GobangLauncher {
 			for (int i = 0; i < BOARD_SIZE; i++) {
 				for (int j = 0; j < BOARD_SIZE; j++) {
 					//绘制黑棋
-					if (board[i][j].equals("⚫")) {
+					if (board[i][j] == 1) {
 						g.drawImage(black, i * RATE + X_OFFSET, j * RATE + Y_OFFSET, null);
 					}
 					//绘制白棋
-					else if (board[i][j].equals("⚪")) {
+					else if (board[i][j] == -1) {
 						g.drawImage(white, i * RATE + X_OFFSET, j * RATE + Y_OFFSET, null);
 					}
 				}
