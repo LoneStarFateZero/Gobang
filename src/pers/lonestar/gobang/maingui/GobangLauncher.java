@@ -5,7 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 public class GobangLauncher {
 	BufferedImage table;
@@ -58,7 +57,7 @@ public class GobangLauncher {
 			}
 
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
 				//将用户鼠标点击事件转换成棋子数组的坐标
 				int xPos = (e.getX() - X_OFFSET) / RATE;
 				int yPos = (e.getY() - Y_OFFSET) / RATE;
@@ -70,9 +69,6 @@ public class GobangLauncher {
 					board[xPos][yPos] = -1;
 					order = true;
 				}
-				/**
-				 * 电脑随机生成两个随机数
-				 */
 				chessBoard.repaint();
 			}
 		});
